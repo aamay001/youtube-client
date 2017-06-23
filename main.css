@@ -3,3 +3,36 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+.ytc-icon-pair-container
+{
+    width: 80px;
+    margin-right: auto;
+    margin-left: auto;    
+    position: relative;
+    top: 5px;
+    text-align: center;
+}
+
+svg.ytc-thinkful-icon
+{
+    margin-top: 10px;
+}
+
+svg.ytc-thinkful-icon g:hover
+{
+    fill: #6799ff;
+}
+
+img.ytc-youtube-icon
+{
+    width: 45px;
+    display: inline-block;
+    position: relative;
+    bottom: 11px;
+}
+img.ytc-youtube-icon:hover
+{
+    width:46px;
+    bottom: 12px;
+}
