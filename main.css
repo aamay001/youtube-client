@@ -1,8 +1,13 @@
-*
+*:not(.glyphicon)
 {
     font-family: 'Work Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+.ytc-navbar
+{
+    margin-bottom: 0px !important;
 }
 
 .ytc-icon-pair-container
@@ -39,6 +44,14 @@ img.ytc-youtube-icon
     text-align: center;
     padding-left: 10%;
     padding-right: 10%;
+    padding-top: 20px;
+    background-color: lightgray;
+    position: fixed;
+}
+
+.ytc-form-group
+{
+    margin-bottom: 0px !important;
 }
 
 .ytc-search-input-label
@@ -60,16 +73,12 @@ img.ytc-youtube-icon
     border-radius: 360pt;
     width: 45px;
     height: 45px;
-    -webkit-transition: all 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transition: all 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .ytc-search-button:hover
 {
-    width: 50px;
-    height: 50px;
-    bottom: 47px;
-    background-color: #6799ff;  
+    background-color: #6799ff;
 }
 
 .ytc-search-button:focus
@@ -81,6 +90,19 @@ img.ytc-youtube-icon
 #ytc-search-input
 {
     height:40px;
+}
+
+.ytc-search-results-container
+{
+    position: relative;
+    top : 175px;   
+}
+
+.ytc-primary-panel-heading
+{
+    background-color: #6799ff !important;
+    border-color: #6799ff !important;
+    text-shadow : 1px 1px black;
 }
 
 

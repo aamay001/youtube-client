@@ -5,22 +5,30 @@
     <title>Thinkful Tube Challenge</title>
     <meta name="description" content="A YouTube client. Designed for a Thinkful challenge.">
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.css" integrity="sha256-sxzrkOPuwljiVGWbxViPJ14ZewXLJHFJDn0bv+5hsDY="
-        crossorigin="anonymous" />
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="http://bootswatch.com/cosmo/bootstrap.min.css" />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="main.css" type="text/css">
-    <script src="app.js" type="text/javascript"></script>
+    <link rel="stylesheet" 
+          href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.css" 
+          integrity="sha256-sxzrkOPuwljiVGWbxViPJ14ZewXLJHFJDn0bv+5hsDY="
+          crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" 
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" 
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <link rel="stylesheet" 
+          href="http://bootswatch.com/cosmo/bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300" rel="stylesheet">
+    <link rel="stylesheet" href="main.css" type="text/css">
+    <script src="app.js" type="text/javascript"></script>    
 </head>
 
 <body>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default ytc-navbar">
         <div class="ytc-icon-pair-container">
             <a href="https://www.thinkful.com/" target="_new"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" class="app-nav-logo ytc-thinkful-icon">
                 <g fill="#fff">
@@ -28,18 +36,24 @@
                     <path d="M17 8v17H9v3h11V11h8V0h-3v8h-8z"></path>
                 </g>
             </svg></a>
-            <a href="https://youtube.com" target="_new"><img src="https://cdn2.iconfinder.com/data/icons/social-icons-color/512/youtube-128.png" alt="YouTube play button icon." class="ytc-youtube-icon"/></a>
+            <a href="https://youtube.com" target="_new">
+                <img src="https://cdn2.iconfinder.com/data/icons/social-icons-color/512/youtube-128.png" alt="YouTube play button icon." class="ytc-youtube-icon"/>
+            </a>
         </div>          
     </nav>
 
-    <div class="ytc-search-container">
-        <div class="form-group">
-            <label for="ytc-search-input control-label" class="ytc-search-input-label" >search YouTube</label>
-            <input title="Hit enter to submit search." class="form-control" type="text" name="ytc-search-input" id="ytc-search-input" placeholder="find a YouTube video" >
+    <main>
+        <div class="ytc-search-container">
+            <div class="form-group ytc-form-group">
+                <label for="ytc-search-input control-label" class="ytc-search-input-label" >search YouTube</label>
+                <input title="Hit enter to submit search." class="form-control" type="text" name="ytc-search-input" id="ytc-search-input" placeholder="find a YouTube video" >
                 <button class="ytc-search-button js-ytc-search-button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-            </input>
-        </div>          
-    </div>
+            </div>          
+        </div>
+        
+        <div class="container ytc-search-results-container" >            
+        </div>
+    </main>
 </body>
 
 </html>
