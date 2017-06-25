@@ -28,7 +28,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-default ytc-navbar">
+    <nav class="navbar navbar-default navbar-fixed-top ytc-navbar">
         <div class="ytc-icon-pair-container">
             <a href="https://www.thinkful.com/" target="_new"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" class="app-nav-logo ytc-thinkful-icon">
                 <g fill="#fff">
@@ -42,17 +42,22 @@
         </div>          
     </nav>
 
-    <main>
+    <main role="main">
         <div class="ytc-search-container">
-            <div class="form-group ytc-form-group">
+            <div class="form-group ytc-form-group js-ytc-form-group">
                 <label for="ytc-search-input control-label" class="ytc-search-input-label" >search YouTube</label>
-                <input title="Hit enter to submit search." class="form-control" type="text" name="ytc-search-input" id="ytc-search-input" placeholder="find a YouTube video" >
+                <input title="Hit enter to submit search." class="form-control" type="text" name="ytc-search-input" id="ytc-search-input" placeholder="find a YouTube video" required>
                 <button class="ytc-search-button js-ytc-search-button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
             </div>          
         </div>
         
         <div class="container ytc-search-results-container" >            
         </div>
+        <div class="jt-ytc-loading-animation-container ytc-loading-animation-container" >
+            <img src="https://s-media-cache-ak0.pinimg.com/originals/0c/44/da/0c44dacf1b038014a6f941131c5e8aa2.gif"
+                 alr="An image of a loading animation." />
+        </div>
+
     </main>
 </body>
 

@@ -8,6 +8,7 @@
 .ytc-navbar
 {
     margin-bottom: 0px !important;
+    z-index: 100;
 }
 
 .ytc-icon-pair-container
@@ -45,8 +46,11 @@ img.ytc-youtube-icon
     padding-left: 10%;
     padding-right: 10%;
     padding-top: 20px;
+    margin-top: 57px;
     background-color: lightgray;
     position: fixed;
+    border-bottom : 1px solid rgba(0,0,0, .1);
+    z-index: 90;
 }
 
 .ytc-form-group
@@ -95,14 +99,35 @@ img.ytc-youtube-icon
 .ytc-search-results-container
 {
     position: relative;
-    top : 175px;   
+    top : 225px;   
 }
 
 .ytc-primary-panel-heading
 {
-    background-color: #6799ff !important;
-    border-color: #6799ff !important;
-    text-shadow : 1px 1px black;
+    background-color: lightgray !important;
+    border:none !important;
+    color:black !important;
+    overflow: hidden;
+    text-overflow : ellipsis;
+    white-space: nowrap;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
+.ytc-loading-animation-container
+{
+    text-align: center;
+    margin-top: 250px;
+    display: none;
+}
 
+.ytc-loading-animation-container img
+{
+    width: 200px;
+}
+
+.ytc-panel
+{
+    box-shadow: 0 5px 5px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+    border-color: lightgray;
+}
