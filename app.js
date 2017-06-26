@@ -1,7 +1,8 @@
 'use strict';
 
-var YTC_SEARCH_SUBMIT_BUTTON = '.js-ytc-search-button';
+/* API KEY is restricted to single IP Address. Request more access. */
 var YTC_API_KEY = 'AIzaSyDQMrY_PWD1wjWMpZotRPqdNbmgX-J_jlg';
+var YTC_SEARCH_SUBMIT_BUTTON = '.js-ytc-search-button';
 var YTC_YOUTUBE_SEARCH_ENDPOINT = 'https://www.googleapis.com/youtube/v3/search';
 var YTC_USER_INPUT = '#ytc-search-input';
 var YTC_FORM_INPUT_GROUP = '.js-ytc-form-group';
