@@ -198,3 +198,12 @@ img.ytc-youtube-icon
 {
     margin-top: 35% !important;
 }
+
+.ytc-error-alert
+{
+    display: none;
+    margin-top: 190px;
+    position:fixed;
+    width: 100%;
+    text-align: center;
+}

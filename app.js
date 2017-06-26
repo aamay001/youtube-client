@@ -13,6 +13,7 @@ var YTC_LOAD_ANIMATION = '.jt-ytc-loading-animation-container';
 var YTC_LOAD_WATCH_VIDEO_MODAL = '.js-ytc-watch-video-modal';
 var YTC_MODAL_CLOSE = '.js-ytc-modal-close';
 var YTC_MODAL_BODY = '.js-modal-body';
+var YTC_ERROR_ALERT = '.ytc-error-alert';
 
 var ytcFirstSearchInitiated = false;
 var ytcWaitOnLoad = true;
@@ -71,8 +72,14 @@ function onSearchSubmitClick()
 
 function searchYouTube(searchText)
 {       
-    ytcSearchParams.q = searchText;    
-    $.getJSON(YTC_YOUTUBE_SEARCH_ENDPOINT, ytcSearchParams, populateVideosArray);
+    ytcSearchParams.q = searchText;
+    $.getJSON(YTC_YOUTUBE_SEARCH_ENDPOINT, ytcSearchParams, populateVideosArray)
+    .fail(onFailGetResults);
+}
+
+function onFailGetResults()
+{
+    toggleLoadImage(false, true);
 }
 
 function populateVideosArray(results)
@@ -157,12 +164,20 @@ function onUserScoll()
     }
 }
 
-function toggleLoadImage(onOff)
+function toggleLoadImage(onOff, err)
 {
+    $(YTC_ERROR_ALERT).hide();
+
     if (  onOff )
     {
         $(YTC_LOAD_ANIMATION).show();
         $(YTC_LOAD_MORE_BUTTON).hide();        
+    }
+
+    else if ( err || false )
+    {
+        $(YTC_LOAD_ANIMATION).hide();
+        $(YTC_ERROR_ALERT).fadeIn('fast');   
     }
 
     else
