@@ -6,9 +6,14 @@ var YTC_YOUTUBE_SEARCH_ENDPOINT = 'https://www.googleapis.com/youtube/v3/search'
 var YTC_USER_INPUT = '#ytc-search-input';
 var YTC_FORM_INPUT_GROUP = '.js-ytc-form-group';
 var YTC_RESULTS_PER_ROW = 1;
+var YTC_LOAD_MORE_BUTTON = '.js-ytc-load-more-button';
 var YTC_SEARCH_RESTULS_CONTAINER = '.ytc-search-results-container';
 var YTC_LOAD_ANIMATION = '.jt-ytc-loading-animation-container';
+var YTC_LOAD_WATCH_VIDEO_MODAL = '.js-ytc-watch-video-modal';
+var YTC_MODAL_CLOSE = '.js-ytc-modal-close';
+var YTC_MODAL_BODY = '.js-modal-body';
 
+var ytcFirstSearchInitiated = false;
 var ytcWaitOnLoad = true;
 var ytcNextPageToken = '';
 var ytcSearchText = '';
@@ -31,6 +36,9 @@ function bindUserInput()
 {
     $(YTC_USER_INPUT).keydown(onUserInputKeyDown);
     $(YTC_SEARCH_SUBMIT_BUTTON).on('click', onSearchSubmitClick);
+    $(YTC_LOAD_MORE_BUTTON).on('click', onLoadMoreButtonClick);
+    $(YTC_SEARCH_RESTULS_CONTAINER).on('click', YTC_LOAD_WATCH_VIDEO_MODAL, watchVideoInModal);
+    $(YTC_MODAL_CLOSE).on('click', onModalCloseClick);
     $(window).scroll(onUserScoll);
 }
 
@@ -53,8 +61,8 @@ function onSearchSubmitClick()
     }
 
     ytcWaitOnLoad = true;
-    $(YTC_SEARCH_RESTULS_CONTAINER).text(''); 
-    $(YTC_LOAD_ANIMATION).show();    
+    $(YTC_SEARCH_RESTULS_CONTAINER).text('');
+    toggleLoadImage(true);        
     ytcNextPageToken = '';
     $(YTC_USER_INPUT).val('');
     searchYouTube(ytcSearchText);
@@ -76,19 +84,24 @@ function processSearchResults(videoPanelArray)
 {    
     var countRows = Math.ceil(videoPanelArray.length / YTC_RESULTS_PER_ROW);     
     $(YTC_SEARCH_RESTULS_CONTAINER).append(getSearchResultsHTML(countRows,videoPanelArray));
-    $(YTC_LOAD_ANIMATION).hide();
-    ytcWaitOnLoad = false;
+    toggleLoadImage(false);
+    ytcWaitOnLoad = false;    
 }
 
 function getVideoPanel(videoItem)
 {
     var newPanel = $('<div class="panel panel-primary ytc-panel"></div>');
-    newPanel.append('<div class="panel-heading ytc-primary-panel-heading">' + videoItem.snippet.title + '</div>');
+    newPanel.append('<div class="panel-heading ytc-primary-panel-heading"><h2>' + videoItem.snippet.title + '</h2></div>');
     newPanel.append('<div class="panel-body"><a href="https://www.youtube.com/watch?v=' + 
-                    videoItem.id.videoId + '" target="_new"><img width="' + 
-                    videoItem.snippet.thumbnails.medium.width + '" height="' + 
-                    videoItem.snippet.thumbnails.medium.height + '" src="' + 
-                    videoItem.snippet.thumbnails.medium.url + '" alt="Video thumbnail." /></a></div>');
+                    videoItem.id.videoId + '" target="_new"><img src="' + 
+                    videoItem.snippet.thumbnails.medium.url + '" alt="Video thumbnail." /></a> \
+                    <div class="ytc-video-meta-ops"><p>Date Published: ' + 
+                    videoItem.snippet.publishedAt + '</p><p>Description:<br>' + 
+                    videoItem.snippet.description  + '</p><a href="https://www.youtube.com/channel/' + 
+                    videoItem.snippet.channelId + '" class="btn btn-default btn-sm" target="_new" >Go to Channel</a> \
+                    <a data="https://www.youtube.com/watch?v=' + 
+                    videoItem.id.videoId + '" class="btn btn-default btn-sm js-ytc-watch-video-modal" data-toggle="modal" data-target="#ytc-video-modal" >Watch</a></div></div>');
+                    
     return newPanel;
 }
 
@@ -125,13 +138,55 @@ function updateNextPageToken(results)
     return ytcNextPageToken;
 }
 
+function onLoadMoreButtonClick()
+{
+    ytcWaitOnLoad = true;
+    toggleLoadImage(true);
+    searchYouTube(ytcSearchText);    
+}
+
 
 function onUserScoll()
 {
     if($(window).scrollTop() == $(document).height() - $(window).height() && !ytcWaitOnLoad) 
     {
         ytcWaitOnLoad = true;
-        $(YTC_LOAD_ANIMATION).show();
+        toggleLoadImage(true);
         searchYouTube(ytcSearchText);
     }
+}
+
+function toggleLoadImage(onOff)
+{
+    if (  onOff )
+    {
+        $(YTC_LOAD_ANIMATION).show();
+        $(YTC_LOAD_MORE_BUTTON).hide();        
+    }
+
+    else
+    {
+        $(YTC_LOAD_ANIMATION).hide();
+        if ( !ytcFirstSearchInitiated )
+        {
+            ytcFirstSearchInitiated = true;
+            $(YTC_LOAD_MORE_BUTTON).css('display', 'block');
+        }
+        else
+        {
+            $(YTC_LOAD_MORE_BUTTON).show();        
+        }
+    }
+}
+
+function watchVideoInModal(event)
+{
+    $(YTC_MODAL_BODY).html('<iframe width="560" height="315" src="' + 
+                           this.getAttribute("data").replace('watch?v=', 'embed/') + 
+                           '" frameborder="0" allowfullscreen></iframe>');    
+}
+
+function onModalCloseClick()
+{
+    $(YTC_MODAL_BODY).html('');    
 }
