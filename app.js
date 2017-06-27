@@ -16,7 +16,7 @@ var YTC_MODAL_BODY = '.js-modal-body';
 var YTC_ERROR_ALERT = '.ytc-error-alert';
 
 var ytcFirstSearchInitiated = false;
-var ytcWaitOnLoad = true;
+var ytcWaitOnLoad = false;
 var ytcNextPageToken = '';
 var ytcSearchText = '';
 var ytcSearchParams = {
@@ -31,7 +31,17 @@ $(onReady);
 
 function onReady()
 {
+    checkAPIKey();
     bindUserInput();
+}
+
+function checkAPIKey()
+{
+    if ( !YTC_API_KEY )
+    {
+        alert("API Key is missing!")
+        toggleLoading(false, true);
+    }
 }
 
 function bindUserInput()
@@ -55,17 +65,18 @@ function onSearchSubmitClick()
     $(YTC_FORM_INPUT_GROUP).removeClass('has-error');
     ytcSearchText = $(YTC_USER_INPUT).val();
 
-    if ( ytcSearchText == '')
+    if ( !ytcSearchText )
     {
         $(YTC_FORM_INPUT_GROUP).toggleClass('has-error');
+        ytcSearchText = undefined;
         alert("Enter Text!");
         return;
     }
 
-    ytcWaitOnLoad = true;
     $(YTC_SEARCH_RESTULS_CONTAINER).text('');
-    toggleLoadImage(true);        
+    toggleLoading(true);        
     ytcNextPageToken = '';
+    ytcSearchParams.pageToken = ytcNextPageToken;
     $(YTC_USER_INPUT).val('');
     searchYouTube(ytcSearchText);
 }
@@ -79,7 +90,7 @@ function searchYouTube(searchText)
 
 function onFailGetResults()
 {
-    toggleLoadImage(false, true);
+    toggleLoading(false, true);
 }
 
 function populateVideosArray(results)
@@ -92,8 +103,7 @@ function processSearchResults(videoPanelArray)
 {    
     var countRows = Math.ceil(videoPanelArray.length / YTC_RESULTS_PER_ROW);     
     $(YTC_SEARCH_RESTULS_CONTAINER).append(getSearchResultsHTML(countRows,videoPanelArray));
-    toggleLoadImage(false);
-    ytcWaitOnLoad = false;    
+    toggleLoading(false);  
 }
 
 function getVideoPanel(videoItem)
@@ -104,7 +114,7 @@ function getVideoPanel(videoItem)
                     videoItem.id.videoId + '" target="_new"><img src="' + 
                     videoItem.snippet.thumbnails.medium.url + '" alt="Video thumbnail." /></a> \
                     <div class="ytc-video-meta-ops"><p>Date Published: ' + 
-                    videoItem.snippet.publishedAt + '</p><p>Description:<br>' + 
+                    videoItem.snippet.publishedAt + '</p><p class="ytc-meta-description">Description:<br>' + 
                     videoItem.snippet.description  + '</p><a href="https://www.youtube.com/channel/' + 
                     videoItem.snippet.channelId + '" class="btn btn-default btn-sm" target="_new" >Go to Channel</a> \
                     <a data="https://www.youtube.com/watch?v=' + 
@@ -148,40 +158,42 @@ function updateNextPageToken(results)
 
 function onLoadMoreButtonClick()
 {
-    ytcWaitOnLoad = true;
-    toggleLoadImage(true);
-    searchYouTube(ytcSearchText);    
+    toggleLoading(true);
+    $("html, body").animate({ scrollTop: $(document).height()-$(window).height() }, 200);
+    searchYouTube(ytcSearchText);        
 }
 
 
 function onUserScoll()
 {
-    if($(window).scrollTop() == $(document).height() - $(window).height() && !ytcWaitOnLoad) 
+    if( ($(window).scrollTop() == $(document).height() - $(window).height()) && !ytcWaitOnLoad) 
     {
-        ytcWaitOnLoad = true;
-        toggleLoadImage(true);
+        toggleLoading(true);
         searchYouTube(ytcSearchText);
     }
 }
 
-function toggleLoadImage(onOff, err)
+function toggleLoading(onOff, err)
 {
     $(YTC_ERROR_ALERT).hide();
 
     if (  onOff )
     {
+        ytcWaitOnLoad = true;
         $(YTC_LOAD_ANIMATION).show();
         $(YTC_LOAD_MORE_BUTTON).hide();        
     }
 
     else if ( err || false )
     {
+        ytcWaitOnLoad = false;
         $(YTC_LOAD_ANIMATION).hide();
         $(YTC_ERROR_ALERT).fadeIn('fast');   
     }
 
     else
     {
+        ytcWaitOnLoad = false;
         $(YTC_LOAD_ANIMATION).hide();
         if ( !ytcFirstSearchInitiated )
         {
